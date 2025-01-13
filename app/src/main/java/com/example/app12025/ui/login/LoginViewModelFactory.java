@@ -1,24 +1,24 @@
 package com.example.app12025.ui.login;
 
-import android.app.Application;
-
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.app12025.data.Database;
+import com.example.app12025.data.LoginDataSource;
+import com.example.app12025.data.LoginRepository;
+
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
-    private Application application;
+    private final Database database;
 
-    public LoginViewModelFactory(Application application) {
-        this.application = application;
+    public LoginViewModelFactory(Database database) {
+        this.database = database;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        // Now the ViewModel constructor accepts Application
-        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(application); // Pass Application here
-        }
-        throw new IllegalArgumentException("Unknown ViewModel class");
+        LoginDataSource dataSource = new LoginDataSource(database);
+        LoginRepository repository = new LoginRepository(dataSource);
+        return (T) new LoginViewModel(repository);
     }
 }

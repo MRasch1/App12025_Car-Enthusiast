@@ -1,26 +1,33 @@
 package com.example.app12025.ui.login;
 
+import androidx.annotation.Nullable;
+
 public class LoginResult {
 
-    private boolean isSuccess;
-    private String errorMessage;
+    @Nullable
+    private final LoggedInUserView success;
+    @Nullable
+    private final Integer error;
 
     // Constructor for success case
-    public LoginResult(boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public LoginResult(@Nullable LoggedInUserView success) {
+        this.success = success;
+        this.error = null;
     }
 
-    // Constructor for failure case, with an error message
-    public LoginResult(boolean isSuccess, String errorMessage) {
-        this.isSuccess = isSuccess;
-        this.errorMessage = errorMessage;
+    // Constructor for failure case, with an error resource ID
+    public LoginResult(@Nullable Integer error) {
+        this.success = null;
+        this.error = error;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+    @Nullable
+    public LoggedInUserView getSuccess() {
+        return success;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    @Nullable
+    public Integer getError() {
+        return error;
     }
 }

@@ -44,9 +44,10 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Method to check if a user exists in the database with the given username and password
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{username, password});
 
         boolean exists = cursor.getCount() > 0;
