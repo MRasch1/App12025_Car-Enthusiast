@@ -1,5 +1,6 @@
 package com.example.app12025.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.app12025.MainActivity;
 import com.example.app12025.R;
 import com.example.app12025.data.Database;
 
@@ -56,7 +58,13 @@ public class LoginActivity extends AppCompatActivity {
             if (loginResult.getSuccess() != null) {
                 String displayName = loginResult.getSuccess().getDisplayName();
                 Toast.makeText(getApplicationContext(), "Welcome, " + displayName + "!", Toast.LENGTH_SHORT).show();
-                // Navigate to next screen or action
+
+                // Navigate to MainActivity
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+
+                // Finish LoginActivity so user can't go back to it
+                finish();
             } else if (loginResult.getError() != null) {
                 Toast.makeText(getApplicationContext(), getString(loginResult.getError()), Toast.LENGTH_SHORT).show();
             }
