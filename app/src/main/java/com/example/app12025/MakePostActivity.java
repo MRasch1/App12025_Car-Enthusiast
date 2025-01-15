@@ -2,27 +2,28 @@ package com.example.app12025;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import android.provider.MediaStore;
-import android.net.Uri;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.example.app12025.data.Database;
 
 import java.io.IOException;
 
@@ -101,17 +102,27 @@ public class MakePostActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
 
         if (selectedImageUri != null && !title.isEmpty() && latitude != 0 && longitude != 0) {
-            // Example: You could return the data back to the previous activity or save it
+            // Save post to database
+            Database db = new Database(this);
+            db.insertPost(title, selectedImageUri.toString(), latitude, longitude);
+
+            // Optionally, return the result back to the previous activity
             Intent resultIntent = new Intent();
             resultIntent.putExtra("imageUri", selectedImageUri.toString());
             resultIntent.putExtra("title", title);
             resultIntent.putExtra("latitude", latitude);
             resultIntent.putExtra("longitude", longitude);
             setResult(RESULT_OK, resultIntent);
-            finish();  // Finish the activity and return to the previous one
+            finish();
         } else {
             Toast.makeText(this, "Please select an image, enter a title, and ensure GPS is enabled.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void savePostToDatabase(String title, Uri imageUri, double latitude, double longitude) {
+        Database database = new Database(this);
+        database.insertPost(title, imageUri.toString(), latitude, longitude);
+        Toast.makeText(this, "Post saved successfully!", Toast.LENGTH_SHORT).show();
     }
 
     private void checkLocationPermissions() {

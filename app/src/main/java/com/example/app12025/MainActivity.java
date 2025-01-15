@@ -62,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
         buttonTakePicture.setOnClickListener(v -> checkPermissionsAndTakePicture());
 
         // Rate Cars button
-        Button buttonRateCars = findViewById(R.id.button4);
-        buttonRateCars.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "Rate Cars clicked", Toast.LENGTH_SHORT).show();
+        Button rateCarsButton = findViewById(R.id.button4);
+        rateCarsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RateCarsActivity.class);
+            startActivity(intent);
         });
 
         // Make Post button
