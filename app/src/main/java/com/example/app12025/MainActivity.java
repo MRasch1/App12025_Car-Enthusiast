@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         // Make Post button
         Button buttonMakePost = findViewById(R.id.button3);
         buttonMakePost.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "Make Post clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, MakePostActivity.class);
+            startActivity(intent);
         });
     }
 
